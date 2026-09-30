@@ -67,13 +67,24 @@ def exchange_code_for_token(code):
         data={
             "client_id": SPOTIFY_CLIENT_ID,
             "grant_type": "authorization_code",
+            "code": code,
             "redirect_uri": SPOTIFY_REDIRECT_URI,
             "code_verifier": code_verifier,
         },
         timeout=15,
     )
 
-    response.raise_for_status()
+    if not response.ok:
+        try:
+            error_data = response.json()
+        except ValueError:
+            error_data = response.text
+
+        raise RuntimeError(
+            "Spotify token exchange failed: "
+            f"HTTP {response.status_code} - "
+            f"{error_data}"
+        )
 
     token_data = response.json()
 
@@ -165,10 +176,19 @@ class CallbackHandler(BaseHTTPRequestHandler):
                 f"{token_data.get('expires_in')} seconds"
             )
 
-        except requests.RequestException as error:
+        except Exception as error:
+            error_message = str(error)
+
+            print(
+                "\nSpotify authentication failed:"
+            )
+            print(error_message)
+
             self.send_html(
-                f"<h1>Token exchange failed</h1>"
-                f"<p>{error}</p>"
+                f"""
+                <h1>Token exchange failed</h1>
+                <p>{error_message}</p>
+                """
             )
 
     def send_html(self, html):
@@ -193,6 +213,9 @@ class CallbackHandler(BaseHTTPRequestHandler):
 
                 p {{
                     color: #B8B8C0;
+                    max-width: 900px;
+                    margin: 20px auto;
+                    word-break: break-word;
                 }}
             </style>
         </head>
