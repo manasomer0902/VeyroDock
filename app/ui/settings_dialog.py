@@ -1,3 +1,5 @@
+import webbrowser
+
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
@@ -43,7 +45,7 @@ class SettingsDialog(QDialog):
         super().__init__(parent)
 
         self.setWindowTitle("Spotify Widget Settings")
-        self.setFixedSize(420, 455)
+        self.setFixedSize(420, 520)
 
         # Clear, familiar Windows UI font.
         self.setFont(QFont("Segoe UI", 10))
@@ -56,8 +58,7 @@ class SettingsDialog(QDialog):
         )
         self.reset_position_requested = False
 
-        self.setStyleSheet(
-            f"""
+        self.setStyleSheet(f"""
             QDialog {{
                 background: #0C0C0F;
                 color: {PRIMARY_TEXT};
@@ -181,7 +182,7 @@ class SettingsDialog(QDialog):
                 background: rgba(255, 255, 255, 5);
                 border: 1px solid {CARD_BORDER};
                 border-radius: 9px;
-                padding: 9px 14px;
+                padding: 7px 14px;
                 font-family: "Segoe UI";
                 font-size: 12px;
                 font-weight: 600;
@@ -193,12 +194,29 @@ class SettingsDialog(QDialog):
                 background: rgba(212, 162, 76, 20);
             }}
 
+            QPushButton#contactUs {{
+                color: {PRIMARY_TEXT};
+                background: rgba(255, 255, 255, 5);
+                border: 1px solid {CARD_BORDER};
+                border-radius: 9px;
+                padding: 7px 14px;
+                font-family: "Segoe UI";
+                font-size: 12px;
+                font-weight: 600;
+            }}
+
+            QPushButton#contactUs:hover {{
+                color: {ACCENT_HOVER};
+                border: 1px solid rgba(212, 162, 76, 90);
+                background: rgba(212, 162, 76, 20);
+            }}
+
             QPushButton#manageQuotes {{
                 color: {PRIMARY_TEXT};
                 background: rgba(212, 162, 76, 14);
                 border: 1px solid rgba(212, 162, 76, 65);
                 border-radius: 9px;
-                padding: 9px 14px;
+                padding: 7px 14px;
                 font-family: "Segoe UI";
                 font-size: 12px;
                 font-weight: 600;
@@ -212,8 +230,8 @@ class SettingsDialog(QDialog):
 
             QDialogButtonBox QPushButton {{
                 min-width: 86px;
-                min-height: 34px;
-                padding: 7px 14px;
+                min-height: 32px;
+                padding: 6px 14px;
                 border-radius: 9px;
                 font-family: "Segoe UI";
                 font-size: 11px;
@@ -241,15 +259,14 @@ class SettingsDialog(QDialog):
                 color: {PRIMARY_TEXT};
                 background: rgba(255, 255, 255, 18);
             }}
-            """
-        )
+            """)
 
         self.setup_ui()
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(24, 22, 24, 20)
-        layout.setSpacing(10)
+        layout.setContentsMargins(20, 18, 20, 16)
+        layout.setSpacing(7)
 
         title = QLabel("Widget Settings")
         title.setObjectName("title")
@@ -259,7 +276,7 @@ class SettingsDialog(QDialog):
         subtitle.setObjectName("subtitle")
         layout.addWidget(subtitle)
 
-        layout.addSpacing(5)
+        layout.addSpacing(3)
 
         # ==================================================
         # WIDGET SIZE
@@ -303,7 +320,7 @@ class SettingsDialog(QDialog):
         self.size_slider.valueChanged.connect(self.handle_size_changed)
         self.update_size_label(self.size_percent_value)
 
-        layout.addSpacing(6)
+        layout.addSpacing(4)
 
         # ==================================================
         # APPEARANCE
@@ -327,9 +344,7 @@ class SettingsDialog(QDialog):
         self.opacity_slider.setValue(self.opacity_value)
         self.opacity_slider.setCursor(Qt.CursorShape.PointingHandCursor)
         self.opacity_slider.setPageStep(10)
-        self.opacity_slider.valueChanged.connect(
-            self.handle_opacity_changed
-        )
+        self.opacity_slider.valueChanged.connect(self.handle_opacity_changed)
 
         self.opacity_label = QLabel()
         self.opacity_label.setObjectName("valueLabel")
@@ -364,12 +379,8 @@ class SettingsDialog(QDialog):
         window_text.setObjectName("formLabel")
         window_text.setFixedWidth(62)
 
-        self.always_on_top_checkbox = QCheckBox(
-            "Keep widget above other windows"
-        )
-        self.always_on_top_checkbox.setChecked(
-            self.always_on_top_value
-        )
+        self.always_on_top_checkbox = QCheckBox("Keep widget above other windows")
+        self.always_on_top_checkbox.setChecked(self.always_on_top_value)
 
         window_row.addWidget(window_text)
         window_row.addWidget(self.always_on_top_checkbox)
@@ -380,35 +391,28 @@ class SettingsDialog(QDialog):
 
         layout.addSpacing(6)
 
-        self.manage_quotes_button = QPushButton(
-            "Manage Quotes"
-        )
+        self.manage_quotes_button = QPushButton("Manage Quotes")
         self.manage_quotes_button.setObjectName("manageQuotes")
-        self.manage_quotes_button.setCursor(
-            Qt.CursorShape.PointingHandCursor
-        )
-        self.manage_quotes_button.clicked.connect(
-            self.quotes_requested.emit
-        )
+        self.manage_quotes_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.manage_quotes_button.clicked.connect(self.quotes_requested.emit)
         layout.addWidget(self.manage_quotes_button)
 
-        self.reset_position_button = QPushButton(
-            "Reset window position"
-        )
+        self.reset_position_button = QPushButton("Reset window position")
         self.reset_position_button.setObjectName("resetPosition")
-        self.reset_position_button.setCursor(
-            Qt.CursorShape.PointingHandCursor
-        )
-        self.reset_position_button.clicked.connect(
-            self.request_reset_position
-        )
+        self.reset_position_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.reset_position_button.clicked.connect(self.request_reset_position)
         layout.addWidget(self.reset_position_button)
+
+        self.contact_us_button = QPushButton("Contact Us")
+        self.contact_us_button.setObjectName("contactUs")
+        self.contact_us_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.contact_us_button.clicked.connect(self.open_contact_dialog)
+        layout.addWidget(self.contact_us_button)
 
         layout.addStretch()
 
         button_box = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Ok
-            | QDialogButtonBox.StandardButton.Cancel
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         )
         button_box.accepted.connect(self.save_settings)
         button_box.rejected.connect(self.reject)
@@ -431,9 +435,11 @@ class SettingsDialog(QDialog):
 
     def request_reset_position(self):
         self.reset_position_requested = True
-        self.reset_position_button.setText(
-            "Position will reset on Apply"
-        )
+        self.reset_position_button.setText("Position will reset on Apply")
+
+    def open_contact_dialog(self):
+        dialog = ContactDialog(parent=self)
+        dialog.exec()
 
     def save_settings(self):
         self.settings_saved.emit(
@@ -444,6 +450,155 @@ class SettingsDialog(QDialog):
         )
         self.accept()
 
+
+class ContactDialog(QDialog):
+    """Simple contact and feedback dialog."""
+
+    CONTACT_EMAIL = "manasomer09@gmail.com"
+    WHATSAPP_NUMBER = "917007527711"
+    WHATSAPP_DISPLAY = "+91 7007527711"
+    INSTAGRAM_USERNAME = "manasomer09"
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.setWindowTitle("Contact Us")
+        self.setFixedSize(420, 390)
+        self.setFont(QFont("Segoe UI", 10))
+
+        self.setStyleSheet(f"""
+            QDialog {{
+                background: #0C0C0F;
+                color: {PRIMARY_TEXT};
+            }}
+
+            QLabel#title {{
+                color: {PRIMARY_TEXT};
+                font-family: "Segoe UI";
+                font-size: 20px;
+                font-weight: 700;
+                background: transparent;
+            }}
+
+            QLabel#subtitle {{
+                color: {SECONDARY_TEXT};
+                font-family: "Segoe UI";
+                font-size: 11px;
+                background: transparent;
+            }}
+
+            QLabel#contactValue {{
+                color: {ACCENT_COLOR};
+                background: rgba(212, 162, 76, 14);
+                border: 1px solid rgba(212, 162, 76, 65);
+                border-radius: 9px;
+                padding: 11px 12px;
+                font-family: "Segoe UI";
+                font-size: 12px;
+                font-weight: 600;
+            }}
+
+            QPushButton {{
+                color: {PRIMARY_TEXT};
+                background: rgba(255, 255, 255, 6);
+                border: 1px solid {CARD_BORDER};
+                border-radius: 9px;
+                padding: 9px 14px;
+                font-family: "Segoe UI";
+                font-size: 11px;
+                font-weight: 600;
+            }}
+
+            QPushButton:hover {{
+                color: {ACCENT_HOVER};
+                background: rgba(212, 162, 76, 18);
+                border: 1px solid rgba(212, 162, 76, 85);
+            }}
+
+            QPushButton#closeButton {{
+                color: #0C0C0F;
+                background: {ACCENT_COLOR};
+                border: 1px solid {ACCENT_COLOR};
+                min-width: 86px;
+            }}
+
+            QPushButton#closeButton:hover {{
+                background: {ACCENT_HOVER};
+                border: 1px solid {ACCENT_HOVER};
+            }}
+            """)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(24, 22, 24, 20)
+        layout.setSpacing(10)
+
+        title = QLabel("Contact Us")
+        title.setObjectName("title")
+        layout.addWidget(title)
+
+        subtitle = QLabel("Have a bug, idea, or feedback? We'd love to hear from you.")
+        subtitle.setObjectName("subtitle")
+        subtitle.setWordWrap(True)
+        layout.addWidget(subtitle)
+
+        layout.addSpacing(8)
+
+        email_label = QLabel(self.CONTACT_EMAIL)
+        email_label.setObjectName("contactValue")
+        email_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(email_label)
+
+        email_button = QPushButton("Open Gmail")
+        email_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        email_button.clicked.connect(self.open_email)
+        layout.addWidget(email_button)
+
+        whatsapp_label = QLabel(self.WHATSAPP_DISPLAY)
+        whatsapp_label.setObjectName("contactValue")
+        whatsapp_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(whatsapp_label)
+
+        whatsapp_button = QPushButton("Chat on WhatsApp")
+        whatsapp_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        whatsapp_button.clicked.connect(self.open_whatsapp)
+        layout.addWidget(whatsapp_button)
+
+        instagram_label = QLabel(f"@{self.INSTAGRAM_USERNAME}")
+        instagram_label.setObjectName("contactValue")
+        instagram_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(instagram_label)
+
+        instagram_button = QPushButton("Message on Instagram")
+        instagram_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        instagram_button.clicked.connect(self.open_instagram)
+        layout.addWidget(instagram_button)
+
+        layout.addStretch()
+
+        close_button = QPushButton("Close")
+        close_button.setObjectName("closeButton")
+        close_button.setCursor(Qt.CursorShape.PointingHandCursor)
+        close_button.clicked.connect(self.accept)
+        layout.addWidget(close_button, 0, Qt.AlignmentFlag.AlignRight)
+
+    def open_email(self):
+        gmail_url = (
+            "https://mail.google.com/mail/?view=cm&fs=1"
+            f"&to={self.CONTACT_EMAIL}"
+            "&su=Spotify Desktop Widget - Feedback"
+        )
+        webbrowser.open_new_tab(gmail_url)
+
+    def open_whatsapp(self):
+        whatsapp_url = (
+            f"https://wa.me/{self.WHATSAPP_NUMBER}"
+            "?text=Hi, I need help with the Spotify Desktop Widget."
+        )
+        webbrowser.open_new_tab(whatsapp_url)
+
+    def open_instagram(self):
+        instagram_url = f"https://ig.me/m/{self.INSTAGRAM_USERNAME}"
+        webbrowser.open_new_tab(instagram_url)
 
 
 class QuotesDialog(QDialog):
@@ -460,13 +615,10 @@ class QuotesDialog(QDialog):
 
         self.quotes = list(quotes)
         self.active_index = (
-            max(0, min(len(self.quotes) - 1, int(active_index)))
-            if self.quotes
-            else 0
+            max(0, min(len(self.quotes) - 1, int(active_index))) if self.quotes else 0
         )
 
-        self.setStyleSheet(
-            f"""
+        self.setStyleSheet(f"""
             QDialog {{
                 background: #0C0C0F;
                 color: {PRIMARY_TEXT};
@@ -559,8 +711,7 @@ class QuotesDialog(QDialog):
                 min-width: 86px;
                 min-height: 34px;
             }}
-            """
-        )
+            """)
 
         self.setup_ui()
         self.refresh_list()
@@ -574,9 +725,7 @@ class QuotesDialog(QDialog):
         title.setObjectName("title")
         layout.addWidget(title)
 
-        subtitle = QLabel(
-            "Add your own lines and choose the one shown on the widget."
-        )
+        subtitle = QLabel("Add your own lines and choose the one shown on the widget.")
         subtitle.setObjectName("subtitle")
         layout.addWidget(subtitle)
 
@@ -620,8 +769,7 @@ class QuotesDialog(QDialog):
         layout.addLayout(actions)
 
         button_box = QDialogButtonBox(
-            QDialogButtonBox.StandardButton.Ok
-            | QDialogButtonBox.StandardButton.Cancel
+            QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
         )
         button_box.accepted.connect(self.save_and_close)
         button_box.rejected.connect(self.reject)
@@ -636,9 +784,7 @@ class QuotesDialog(QDialog):
             self.list_widget.addItem(item)
 
         if self.quotes:
-            self.active_index = max(
-                0, min(self.active_index, len(self.quotes) - 1)
-            )
+            self.active_index = max(0, min(self.active_index, len(self.quotes) - 1))
             self.list_widget.setCurrentRow(self.active_index)
 
     def add_quote(self):
