@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import secrets
+import sys
 import webbrowser
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -15,7 +16,6 @@ from app.config.spotify_config import (
     SPOTIFY_REDIRECT_URI,
 )
 
-
 AUTH_URL = "https://accounts.spotify.com/authorize"
 TOKEN_URL = "https://accounts.spotify.com/api/token"
 
@@ -25,8 +25,22 @@ SCOPES = (
     "user-modify-playback-state"
 )
 
-TOKEN_FILE = "data/token.json"
+if getattr(sys, "frozen", False) and sys.platform == "win32":
+    APP_DATA_DIR = os.path.join(
+        os.environ.get(
+            "LOCALAPPDATA",
+            os.path.expanduser("~"),
+        ),
+        "VeyroDock",
+        "data",
+    )
+else:
+    APP_DATA_DIR = "data"
 
+TOKEN_FILE = os.path.join(
+    APP_DATA_DIR,
+    "token.json",
+)
 code_verifier = None
 expected_state = None
 
@@ -36,13 +50,9 @@ def generate_code_verifier():
 
 
 def generate_code_challenge(verifier):
-    digest = hashlib.sha256(
-        verifier.encode("utf-8")
-    ).digest()
+    digest = hashlib.sha256(verifier.encode("utf-8")).digest()
 
-    return base64.urlsafe_b64encode(
-        digest
-    ).decode("utf-8").rstrip("=")
+    return base64.urlsafe_b64encode(digest).decode("utf-8").rstrip("=")
 
 
 def build_authorization_url(verifier, state):
@@ -88,12 +98,14 @@ def exchange_code_for_token(code):
 
     token_data = response.json()
 
-    token_data["expires_at"] = (
-        __import__("time").time()
-        + token_data.get("expires_in", 3600)
+    token_data["expires_at"] = __import__("time").time() + token_data.get(
+        "expires_in", 3600
     )
 
-    os.makedirs("data", exist_ok=True)
+    os.makedirs(
+        APP_DATA_DIR,
+        exist_ok=True,
+    )
 
     with open(
         TOKEN_FILE,
@@ -128,10 +140,7 @@ class CallbackHandler(BaseHTTPRequestHandler):
         )[0]
 
         if error:
-            self.send_html(
-                f"<h1>Spotify authorization failed</h1>"
-                f"<p>{error}</p>"
-            )
+            self.send_html(f"<h1>Spotify authorization failed</h1>" f"<p>{error}</p>")
             return
 
         code = query.get(
@@ -145,51 +154,35 @@ class CallbackHandler(BaseHTTPRequestHandler):
         )[0]
 
         if not code:
-            self.send_html(
-                "<h1>No authorization code received.</h1>"
-            )
+            self.send_html("<h1>No authorization code received.</h1>")
             return
 
         if state != expected_state:
-            self.send_html(
-                "<h1>Security check failed: state mismatch.</h1>"
-            )
+            self.send_html("<h1>Security check failed: state mismatch.</h1>")
             return
 
         try:
             token_data = exchange_code_for_token(code)
 
-            self.send_html(
-                """
+            self.send_html("""
                 <h1>Spotify connected successfully! 🎵</h1>
                 <p>You can close this browser tab and return to the app.</p>
-                """
-            )
+                """)
 
             print("\nSpotify authentication successful!")
-            print(
-                f"Token type: "
-                f"{token_data.get('token_type')}"
-            )
-            print(
-                f"Expires in: "
-                f"{token_data.get('expires_in')} seconds"
-            )
+            print(f"Token type: " f"{token_data.get('token_type')}")
+            print(f"Expires in: " f"{token_data.get('expires_in')} seconds")
 
         except Exception as error:
             error_message = str(error)
 
-            print(
-                "\nSpotify authentication failed:"
-            )
+            print("\nSpotify authentication failed:")
             print(error_message)
 
-            self.send_html(
-                f"""
+            self.send_html(f"""
                 <h1>Token exchange failed</h1>
                 <p>{error_message}</p>
-                """
-            )
+                """)
 
     def send_html(self, html):
         response = f"""
@@ -234,9 +227,7 @@ class CallbackHandler(BaseHTTPRequestHandler):
 
         self.end_headers()
 
-        self.wfile.write(
-            response.encode("utf-8")
-        )
+        self.wfile.write(response.encode("utf-8"))
 
     def log_message(self, format, *args):
         return
@@ -248,10 +239,7 @@ def start_callback_server():
         CallbackHandler,
     )
 
-    print(
-        "Callback server running on "
-        "http://127.0.0.1:8888"
-    )
+    print("Callback server running on " "http://127.0.0.1:8888")
 
     return server
 
@@ -261,14 +249,10 @@ def main():
     global expected_state
 
     if not SPOTIFY_CLIENT_ID:
-        raise ValueError(
-            "Spotify Client ID is missing."
-        )
+        raise ValueError("Spotify Client ID is missing.")
 
     if not SPOTIFY_REDIRECT_URI:
-        raise ValueError(
-            "Spotify redirect URI is missing."
-        )
+        raise ValueError("Spotify redirect URI is missing.")
 
     code_verifier = generate_code_verifier()
 
@@ -281,21 +265,15 @@ def main():
         expected_state,
     )
 
-    print(
-        "Opening Spotify authorization..."
-    )
+    print("Opening Spotify authorization...")
 
-    webbrowser.open(
-        authorization_url
-    )
+    webbrowser.open(authorization_url)
 
     server.handle_request()
 
     server.server_close()
 
-    print(
-        "\nAuthentication process finished."
-    )
+    print("\nAuthentication process finished.")
 
 
 if __name__ == "__main__":

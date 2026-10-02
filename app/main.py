@@ -10,7 +10,22 @@ from app.ui.connection_dialog import ConnectionDialog
 from app.ui.icons import get_veyrodock_icon
 from app.ui.window import SpotifyWidget
 
-TOKEN_FILE = "data/token.json"
+if getattr(sys, "frozen", False) and sys.platform == "win32":
+    APP_DATA_DIR = os.path.join(
+        os.environ.get(
+            "LOCALAPPDATA",
+            os.path.expanduser("~"),
+        ),
+        "VeyroDock",
+        "data",
+    )
+else:
+    APP_DATA_DIR = "data"
+
+TOKEN_FILE = os.path.join(
+    APP_DATA_DIR,
+    "token.json",
+)
 
 
 def set_windows_app_id():
