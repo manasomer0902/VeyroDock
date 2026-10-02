@@ -1,8 +1,16 @@
 # VeyroDock
 
-VeyroDock is a lightweight desktop Spotify widget for Windows.
+> A lightweight desktop Spotify widget for Windows.
 
-It gives you quick access to your current Spotify playback without needing to keep the full Spotify window in front of you.
+## Download
+
+### [⬇️ Download VeyroDock for Windows](https://github.com/manasomer0902/VeyroDock/releases/latest)
+
+Download the latest Windows installer from the **Releases** page and run the `.exe` installer.
+
+**Latest release:** `v1.0.0`
+
+VeyroDock gives you quick access to your current Spotify playback without needing to keep the full Spotify window in front of you.
 
 ## Features
 
@@ -35,11 +43,12 @@ You need:
 
 ### Using the packaged application
 
-1. Open `VeyroDock.exe`.
-2. If this is your first launch, use the connection option to connect VeyroDock to Spotify.
-3. Complete the Spotify authentication flow.
-4. Once connected, VeyroDock will display your current playback.
-5. Use the widget controls to control playback, seek, and volume.
+1. Download the latest installer from the [VeyroDock Releases](https://github.com/manasomer0902/VeyroDock/releases/latest) page.
+2. Run the installer and launch VeyroDock.
+3. If this is your first launch, use the connection option to connect VeyroDock to Spotify.
+4. Complete the Spotify authentication flow.
+5. Once connected, VeyroDock will display your current playback.
+6. Use the widget controls to control playback, seek, and volume.
 
 ### Running from the Python project
 
@@ -115,7 +124,8 @@ The project can be packaged with PyInstaller.
 From the project root:
 
 ```powershell
-pyinstaller --noconfirm --clean --windowed --name VeyroDock --icon="assets/icons/veyrodock.ico" --add-data "assets;assets" app/main.py```
+pyinstaller --noconfirm --clean --windowed --name VeyroDock --icon="assets/icons/veyrodock.ico" --add-data "assets;assets" app/main.py
+```
 
 The packaged application is generated under:
 
