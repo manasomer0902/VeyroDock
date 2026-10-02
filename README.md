@@ -115,8 +115,7 @@ The project can be packaged with PyInstaller.
 From the project root:
 
 ```powershell
-pyinstaller --noconfirm --clean --windowed --name VeyroDock --icon="assets/icons/veyrodock.ico" app/main.py
-```
+pyinstaller --noconfirm --clean --windowed --name VeyroDock --icon="assets/icons/veyrodock.ico" --add-data "assets;assets" app/main.py```
 
 The packaged application is generated under:
 
