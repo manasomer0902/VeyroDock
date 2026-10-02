@@ -14,25 +14,35 @@ VeyroDock gives you quick access to your current Spotify playback without needin
 
 ## Screenshots
 
-### VeyroDock Widget
-
-![VeyroDock main widget](assets/images/veyrodock-main.png)
-
-### Spotify Playback
-
-![VeyroDock Spotify playback](assets/images/veyrodock-spotify.png)
-
-### Settings
-
-![VeyroDock settings](assets/images/veyrodock-settings.png)
-
-### System Tray
-
-![VeyroDock system tray](assets/images/veyrodock-tray.png)
-
-### Connect Spotify
-
-![VeyroDock Spotify connection](assets/images/veyrodock-connect.png)
+<table>
+<tr>
+<td align="center" width="50%">
+<strong>Main Widget</strong><br><br>
+<img src="assets/images/veyrodock-main.png" width="100%" alt="VeyroDock main widget">
+</td>
+<td align="center" width="50%">
+<strong>Spotify Playback</strong><br><br>
+<img src="assets/images/veyrodock-spotify.png" width="100%" alt="VeyroDock Spotify playback">
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<strong>Settings</strong><br><br>
+<img src="assets/images/veyrodock-settings.png" width="100%" alt="VeyroDock settings">
+</td>
+<td align="center" width="50%">
+<strong>System Tray</strong><br><br>
+<img src="assets/images/veyrodock-tray.png" width="100%" alt="VeyroDock system tray">
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<strong>Connect Spotify</strong><br><br>
+<img src="assets/images/veyrodock-connect.png" width="100%" alt="VeyroDock Spotify connection">
+</td>
+<td></td>
+</tr>
+</table>
 
 ## Features
 
