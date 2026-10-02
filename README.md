@@ -1,18 +1,49 @@
-# VeyroDock
+<div align="center">
 
-> A lightweight desktop Spotify widget for Windows.
+# 🎵 VeyroDock
 
-## Download
+### A lightweight Spotify desktop widget for Windows.
 
-### [⬇️ Download VeyroDock for Windows](https://github.com/manasomer0902/VeyroDock/releases/latest)
+Control your music without keeping the full Spotify window in front of you.
 
-Download the latest Windows installer from the **Releases** page and run the `.exe` installer.
+[⬇️ **Download VeyroDock**](https://github.com/manasomer0902/VeyroDock/releases/latest) · [📦 Releases](https://github.com/manasomer0902/VeyroDock/releases) · [🐛 Report an issue](https://github.com/manasomer0902/VeyroDock/issues)
 
-**Latest release:** `v1.0.0`
+<br>
 
-VeyroDock gives you quick access to your current Spotify playback without needing to keep the full Spotify window in front of you.
+![Latest Release](https://img.shields.io/github/v/release/manasomer0902/VeyroDock?style=for-the-badge&label=Latest%20Release)
+![Platform](https://img.shields.io/badge/platform-Windows-0078D4?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PySide6](https://img.shields.io/badge/UI-PySide6-41CD52?style=for-the-badge&logo=qt&logoColor=white)
 
-## Screenshots
+</div>
+
+---
+
+## ✨ What is VeyroDock?
+
+**VeyroDock** is a compact Windows desktop widget that connects to Spotify and puts the controls you use most within easy reach.
+
+Instead of keeping the full Spotify application in front of you, VeyroDock gives you a small, focused interface for your current playback.
+
+> 🎧 **Your music. Your desktop. Less clutter.**
+
+---
+
+## 🚀 Download
+
+### Windows
+
+**[⬇️ Download the latest VeyroDock installer](https://github.com/manasomer0902/VeyroDock/releases/latest)**
+
+Download the `.exe` installer from the latest GitHub Release, run it, and launch VeyroDock.
+
+**Current release:** `v1.0.0`
+
+> VeyroDock is currently available as a Windows desktop application.
+
+---
+
+## 🖥️ Screenshots
 
 <table>
 <tr>
@@ -44,69 +75,42 @@ VeyroDock gives you quick access to your current Spotify playback without needin
 </tr>
 </table>
 
-## Features
+---
 
-- Connects to your Spotify account using Spotify authentication.
-- Play and pause the current track.
-- Skip to the next track.
-- Go back to the previous track.
-- Seek through the current track.
-- Control Spotify volume.
-- Mute and unmute volume.
-- Display the current track information.
-- Display album artwork.
-- Open VeyroDock settings.
-- Keep VeyroDock above other windows when **Keep widget above other windows** is enabled.
-- Use VeyroDock from the Windows system tray.
-- Remember supported application settings such as window position and preferences.
-- Use the VeyroDock application icon throughout the desktop application.
+## ⭐ Features
 
-## Requirements
+| Feature | Description |
+|---|---|
+| 🎵 Spotify Connection | Connect your Spotify account through Spotify authentication. |
+| ▶️ Playback Controls | Play, pause, previous, and next track controls. |
+| ⏩ Track Seeking | Quickly move through the current track. |
+| 🔊 Volume Control | Adjust volume and mute/unmute playback. |
+| 🖼️ Album Artwork | Display the artwork of the currently playing track. |
+| 📊 Track Information | Show song, artist, album, progress, duration, and playback state. |
+| ⚙️ Settings | Configure supported application preferences. |
+| 📌 Always on Top | Keep the widget above normal application windows. |
+| 🖥️ System Tray | Access VeyroDock from the Windows system tray. |
+| 💾 Local Preferences | Remember supported settings such as window position and preferences. |
+| 🎨 Custom App Icon | Use the VeyroDock application icon throughout the desktop app. |
 
-VeyroDock is currently intended for Windows.
+---
 
-You need:
+## 🎧 Playback Controls
 
-- A Spotify Premium account.
-- Spotify playback available on your account/device.
-- The VeyroDock application.
+VeyroDock provides quick access to:
 
-## Getting Started
+- ⏮️ Previous track
+- ▶️ Play / pause
+- ⏭️ Next track
+- ⏱️ Track seeking
+- 🔊 Volume
+- 🔇 Mute / unmute
 
-### Using the packaged application
+The volume slider responds immediately while volume updates are sent after the user pauses briefly, helping keep the control responsive.
 
-1. Download the latest installer from the [VeyroDock Releases](https://github.com/manasomer0902/VeyroDock/releases/latest) page.
-2. Run the installer and launch VeyroDock.
-3. If this is your first launch, use the connection option to connect VeyroDock to Spotify.
-4. Complete the Spotify authentication flow.
-5. Once connected, VeyroDock will display your current playback.
-6. Use the widget controls to control playback, seek, and volume.
+---
 
-### Running from the Python project
-
-If you are running the source project instead of the packaged application:
-
-```powershell
-.venv\Scripts\activate
-python -m app.main
-```
-
-The Python project requires the dependencies listed in `requirements.txt`.
-
-## Playback Controls
-
-VeyroDock provides quick controls for:
-
-- Previous track
-- Play / pause
-- Next track
-- Track seeking
-- Volume
-- Mute / unmute
-
-The volume control is designed so the slider responds immediately while volume updates are sent after the user pauses briefly.
-
-## Track Information
+## 🎶 Track Information
 
 When Spotify provides playback information, VeyroDock can display:
 
@@ -118,44 +122,102 @@ When Spotify provides playback information, VeyroDock can display:
 - Track duration
 - Playing / paused state
 
-## Settings
+---
 
-VeyroDock includes a settings page for supported application preferences.
+## ⚙️ Settings
 
-One of the available behaviors is **Keep widget above other windows**:
+VeyroDock includes a settings interface for supported application preferences.
 
-- **Enabled:** VeyroDock stays above normal windows.
-- **Disabled:** VeyroDock behaves like a normal window and can move behind other windows.
+### Keep widget above other windows
 
-## System Tray
+- **Enabled** — VeyroDock stays above normal application windows.
+- **Disabled** — VeyroDock behaves like a normal window and can move behind other windows.
 
-VeyroDock can run through the Windows system tray.
+---
 
-The tray integration provides access to the application while keeping the desktop widget available without requiring the main application window to remain in focus.
+## 🔔 System Tray
 
-## Project Structure
+VeyroDock can run through the Windows system tray, giving you quick access to the application without requiring the main widget to remain in focus.
 
-The main application is organized into separate areas for configuration, Spotify integration, services, UI components, icons, and screenshots:
+---
 
-```text
-app/
-├── config/
-├── services/
-├── spotify/
-├── ui/
-└── main.py
+## 🏁 Getting Started
 
-assets/
-├── icons/
-└── images/
-    ├── veyrodock-main.png
-    ├── veyrodock-spotify.png
-    ├── veyrodock-settings.png
-    ├── veyrodock-tray.png
-    └── veyrodock-connect.png
+### 1. Install the packaged application
+
+1. Download the latest installer from the [**VeyroDock Releases**](https://github.com/manasomer0902/VeyroDock/releases/latest) page.
+2. Run the `.exe` installer.
+3. Launch VeyroDock.
+4. Use the connection option to connect your Spotify account.
+5. Complete the Spotify authentication flow in your browser.
+6. Return to VeyroDock and start controlling playback.
+
+### 2. Run from source
+
+If you want to run the Python project directly:
+
+```powershell
+.venv\Scripts\activate
+python -m app.main
 ```
 
-## Building the Windows Application
+Install dependencies first if required:
+
+```powershell
+pip install -r requirements.txt
+```
+
+---
+
+## 📋 Requirements
+
+VeyroDock is currently intended for **Windows**.
+
+You need:
+
+- Windows
+- A Spotify Premium account
+- Spotify playback available on your account/device
+- VeyroDock installed or the Python project environment configured
+
+---
+
+## 🧱 Project Structure
+
+```text
+VeyroDock/
+├── app/
+│   ├── config/
+│   ├── services/
+│   ├── spotify/
+│   ├── ui/
+│   └── main.py
+│
+├── assets/
+│   ├── icons/
+│   └── images/
+│       ├── veyrodock-main.png
+│       ├── veyrodock-spotify.png
+│       ├── veyrodock-settings.png
+│       ├── veyrodock-tray.png
+│       └── veyrodock-connect.png
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🛠️ Tech Stack
+
+- **Python** — application logic
+- **PySide6** — desktop UI
+- **Spotify Web API** — Spotify account and playback integration
+- **PyInstaller** — Windows application packaging
+
+---
+
+## 📦 Building the Windows Application
 
 The project can be packaged with PyInstaller.
 
@@ -171,37 +233,35 @@ The packaged application is generated under:
 dist/
 ```
 
-## Development
+---
 
-The project uses Python and PySide6 for the desktop application.
-
-Install the project dependencies with:
-
-```powershell
-pip install -r requirements.txt
-```
-
-Then run:
-
-```powershell
-python -m app.main
-```
-
-## Notes
+## 🔐 Notes
 
 - VeyroDock is a desktop client/widget for controlling Spotify playback.
 - Spotify authentication and playback access depend on Spotify's available services and the account/device being used.
-- Keep your local authentication and configuration files private.
+- Keep local authentication and configuration files private.
 - The `data/` directory may contain local application data and should not be shared publicly.
-
-## License
-
-No license information is currently specified in the project.
-
-## Project Status
-
-VeyroDock is currently packaged as a Windows desktop application and has been tested as a packaged executable.
 
 ---
 
+## 📄 License
+
+No license information is currently specified in the project.
+
+---
+
+## 📍 Project Status
+
+**VeyroDock v1.0.0** is currently packaged as a Windows desktop application and has been tested as a packaged executable.
+
+---
+
+<div align="center">
+
+### Built with Python & ☕
+
 **VeyroDock** — a compact Spotify companion for your Windows desktop.
+
+[⬆️ Back to top](#-veyrodock)
+
+</div>
