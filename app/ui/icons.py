@@ -1,3 +1,6 @@
+import sys
+from pathlib import Path
+
 from PySide6.QtCore import Qt
 from PySide6.QtGui import (
     QColor,
@@ -6,6 +9,22 @@ from PySide6.QtGui import (
     QPainterPath,
     QPixmap,
 )
+
+
+def get_veyrodock_icon_path():
+    """Return the bundled VeyroDock PNG icon path in source or PyInstaller builds."""
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        root = Path(sys._MEIPASS)
+    else:
+        root = Path(__file__).resolve().parents[2]
+
+    return root / "assets" / "icons" / "veyrodock.png"
+
+
+def get_veyrodock_icon():
+    """Return the VeyroDock application icon."""
+    icon_path = get_veyrodock_icon_path()
+    return QIcon(str(icon_path)) if icon_path.exists() else QIcon()
 
 
 def create_icon(

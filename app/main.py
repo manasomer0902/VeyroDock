@@ -1,15 +1,24 @@
 import json
 import os
 import sys
+import ctypes
 
 from PySide6.QtWidgets import QApplication
 
 from app.spotify.auth_runner import AuthRunner
 from app.ui.connection_dialog import ConnectionDialog
+from app.ui.icons import get_veyrodock_icon
 from app.ui.window import SpotifyWidget
 
-
 TOKEN_FILE = "data/token.json"
+
+
+def set_windows_app_id():
+    """Set the Windows application identity used by the taskbar."""
+    if sys.platform == "win32":
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
+            "VeyroDock.VeyroDock"
+        )
 
 
 def spotify_token_exists():
@@ -36,7 +45,11 @@ def start_widget(app):
 
 
 def main():
+    set_windows_app_id()
+
     app = QApplication(sys.argv)
+    app.setApplicationName("VeyroDock")
+    app.setWindowIcon(get_veyrodock_icon())
     app.setQuitOnLastWindowClosed(True)
 
     # ==================================================
@@ -71,9 +84,7 @@ def main():
         auth_runner.start()
 
     def authentication_failed(message):
-        dialog.set_error(
-            f"Connection failed: {message}"
-        )
+        dialog.set_error(f"Connection failed: {message}")
 
     def authentication_finished():
         dialog.set_success()
@@ -82,17 +93,11 @@ def main():
 
         state["window"] = start_widget(app)
 
-    dialog.connect_requested.connect(
-        start_authentication
-    )
+    dialog.connect_requested.connect(start_authentication)
 
-    auth_runner.failed.connect(
-        authentication_failed
-    )
+    auth_runner.failed.connect(authentication_failed)
 
-    auth_runner.finished.connect(
-        authentication_finished
-    )
+    auth_runner.finished.connect(authentication_finished)
 
     dialog.exec()
 

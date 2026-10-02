@@ -7,6 +7,8 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
 )
 
+from app.ui.icons import get_veyrodock_icon
+
 from app.ui.styles import (
     ACCENT_COLOR,
     ACCENT_HOVER,
@@ -26,8 +28,9 @@ class ConnectionDialog(QDialog):
         super().__init__(parent)
 
         self.setWindowTitle("Connect Spotify")
+        self.setWindowIcon(get_veyrodock_icon())
         self.setFixedSize(420, 300)
-        self.setFont(QFont("Segoe UI", 10))
+        self.setFont(QFont("Segoe UI Variable", 10, QFont.Weight.DemiBold))
 
         self.setStyleSheet(
             f"""

@@ -49,3 +49,67 @@ if __name__ == "__main__":
         print(f"Progress  : {track.progress_ms} ms")
         print(f"Duration  : {track.duration_ms} ms")
         print(f"Playing   : {track.is_playing}")
+
+
+def get_volume_percent():
+    """Return the active Spotify device volume (0-100)."""
+    from .client import spotify_request
+
+    response = spotify_request(
+        "GET",
+        "/me/player",
+    )
+
+    if response.status_code == 204:
+        return None
+
+    response.raise_for_status()
+
+    data = response.json()
+    device = data.get("device") or {}
+    volume = device.get("volume_percent")
+
+    if volume is None:
+        return None
+
+    return max(0, min(100, int(volume)))
+
+
+def set_volume(volume_percent):
+    """Set the active Spotify device volume (0-100)."""
+    from .client import spotify_request
+
+    volume_percent = max(0, min(100, int(volume_percent)))
+
+    response = spotify_request(
+        "GET",
+        "/me/player",
+    )
+
+    if response.status_code == 204:
+        raise RuntimeError(
+            "Spotify has no active playback device."
+        )
+
+    response.raise_for_status()
+
+    data = response.json()
+    device = data.get("device") or {}
+    device_id = device.get("id")
+
+    if not device_id:
+        raise RuntimeError(
+            "Spotify did not provide an active device."
+        )
+
+    response = spotify_request(
+        "PUT",
+        "/me/player/volume",
+        params={
+            "volume_percent": volume_percent,
+            "device_id": device_id,
+        },
+    )
+
+    response.raise_for_status()
+    return volume_percent

@@ -11,7 +11,7 @@ from app.spotify.controller import (
     skip_next,
     skip_previous,
 )
-from app.spotify.playback import get_current_track
+from app.spotify.playback import get_current_track, set_volume
 
 
 class CommandExecutor(QObject):
@@ -311,6 +311,25 @@ class CommandExecutor(QObject):
 
         self.submit(
             "seek",
+            task,
+        )
+
+    # ==================================================
+    # VOLUME
+    # ==================================================
+
+    def set_volume(
+        self,
+        volume_percent,
+    ):
+
+        def task():
+            return set_volume(
+                volume_percent
+            )
+
+        self.submit(
+            "volume",
             task,
         )
 

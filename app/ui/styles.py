@@ -2,9 +2,9 @@
 # WINDOW
 # ==========================================================
 
-WINDOW_WIDTH = 460
+WINDOW_WIDTH = 440
 
-WINDOW_HEIGHT = 390
+WINDOW_HEIGHT = 350
 
 WINDOW_OPACITY = 0.90
 
@@ -19,27 +19,27 @@ BACKGROUND_COLOR = "#0C0C0F"
 
 CARD_COLOR = "#141418"
 
-CARD_BORDER = "#342A1E"
+CARD_BORDER = "#173A30"
 
 
 # ==========================================================
 # TEXT
 # ==========================================================
 
-PRIMARY_TEXT = "#F5F2EA"
+PRIMARY_TEXT = "#F2F5F4"
 
-SECONDARY_TEXT = "#A8A39A"
+SECONDARY_TEXT = "#A7B1AE"
 
-MUTED_TEXT = "#706C65"
+MUTED_TEXT = "#68736F"
 
 
 # ==========================================================
 # ACCENT
 # ==========================================================
 
-ACCENT_COLOR = "#D4A24C"
+ACCENT_COLOR = "#26E2A0"
 
-ACCENT_HOVER = "#E4B565"
+ACCENT_HOVER = "#5AF2BE"
 
 
 # ==========================================================
@@ -50,7 +50,7 @@ CONTROL_BACKGROUND = "transparent"
 
 CONTROL_HOVER = "rgba(255, 255, 255, 32)"
 
-CONTROL_ACTIVE = "rgba(212, 162, 76, 35)"
+CONTROL_ACTIVE = "rgba(38, 226, 160, 35)"
 
 CONTROL_SIZE = 48
 
