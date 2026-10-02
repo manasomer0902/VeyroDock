@@ -12,6 +12,28 @@ Download the latest Windows installer from the **Releases** page and run the `.e
 
 VeyroDock gives you quick access to your current Spotify playback without needing to keep the full Spotify window in front of you.
 
+## Screenshots
+
+### VeyroDock Widget
+
+![VeyroDock main widget](assets/images/veyrodock-main.png)
+
+### Spotify Playback
+
+![VeyroDock Spotify playback](assets/images/veyrodock-spotify.png)
+
+### Settings
+
+![VeyroDock settings](assets/images/veyrodock-settings.png)
+
+### System Tray
+
+![VeyroDock system tray](assets/images/veyrodock-tray.png)
+
+### Connect Spotify
+
+![VeyroDock Spotify connection](assets/images/veyrodock-connect.png)
+
 ## Features
 
 - Connects to your Spotify account using Spotify authentication.
@@ -103,7 +125,7 @@ The tray integration provides access to the application while keeping the deskto
 
 ## Project Structure
 
-The main application is organized into separate areas for configuration, Spotify integration, services, and UI components:
+The main application is organized into separate areas for configuration, Spotify integration, services, UI components, icons, and screenshots:
 
 ```text
 app/
@@ -114,7 +136,13 @@ app/
 └── main.py
 
 assets/
-└── icons/
+├── icons/
+└── images/
+    ├── veyrodock-main.png
+    ├── veyrodock-spotify.png
+    ├── veyrodock-settings.png
+    ├── veyrodock-tray.png
+    └── veyrodock-connect.png
 ```
 
 ## Building the Windows Application
