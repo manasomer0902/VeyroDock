@@ -15,6 +15,10 @@ Control your music without keeping the full Spotify window in front of you.
 ![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![PySide6](https://img.shields.io/badge/UI-PySide6-41CD52?style=for-the-badge&logo=qt&logoColor=white)
 
+<br>
+
+<img src="https://visitor-badge.laobi.icu/badge?page_id=manasomer0902.VeyroDock&left_text=VeyroDock%20page%20views" alt="VeyroDock page views">
+
 </div>
 
 ---
